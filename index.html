@@ -1488,191 +1488,443 @@
 
 <script>
   const packages = [
-    {
-      name: "Mesmerizing Kerala Tour",
-      img: "images/packages/kerala-mesmerizing.jpg",
-      category: "domestic",
-      kicker: "Hill & Houseboat",
-      duration: "5N / 6D",
-      cities: "Cochin · Munnar · Thekkady · Alleppey",
-      itinerary: [
-        ["Day 1","Arrival Cochin & Departure"],
-        ["Day 2","Munnar"],
-        ["Day 3","Munnar"],
-        ["Day 4","Thekkady"],
-        ["Day 5","Alleppey Houseboat"],
-        ["Day 6","Cochin & Departure"]
+  {
+    "name": "Mesmerizing Kerala Tour",
+    "img": "images/packages/kerala-mesmerizing.jpg",
+    "category": "domestic",
+    "kicker": "Hill & Houseboat",
+    "duration": "5N / 6D",
+    "cities": "Cochin · Munnar · Thekkady · Alleppey",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Cochin & Departure"
+      ],
+      [
+        "Day 2",
+        "Munnar"
+      ],
+      [
+        "Day 3",
+        "Munnar"
+      ],
+      [
+        "Day 4",
+        "Thekkady"
+      ],
+      [
+        "Day 5",
+        "Alleppey Houseboat"
+      ],
+      [
+        "Day 6",
+        "Cochin & Departure"
       ]
-    },
-    {
-      name: "Pancha Bootham",
-      img: "images/packages/pancha-bootham.jpg",
-      category: "pilgrimage",
-      kicker: "Temple Tour",
-      duration: "5N / 6D",
-      cities: "Chennai · Kanchipuram · Tirupathi · Thiruvannamalai",
-      itinerary: [
-        ["Day 1","Arrival Chennai"],
-        ["Day 2","Kanchipuram"],
-        ["Day 3","Kalahasti – Tirupathi"],
-        ["Day 4","Vellore – Thiruvannamalai"],
-        ["Day 5","Chidambaram"],
-        ["Day 6","Trichy"],
-        ["Day 7","Departure"]
+    ]
+  },
+  {
+    "name": "Pancha Bootham",
+    "img": "images/packages/pancha-bootham.jpg",
+    "category": "pilgrimage",
+    "kicker": "Temple Tour",
+    "duration": "5N / 6D",
+    "cities": "Chennai · Kanchipuram · Tirupathi · Thiruvannamalai",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Chennai"
+      ],
+      [
+        "Day 2",
+        "Kanchipuram"
+      ],
+      [
+        "Day 3",
+        "Kalahasti – Tirupathi"
+      ],
+      [
+        "Day 4",
+        "Vellore – Thiruvannamalai"
+      ],
+      [
+        "Day 5",
+        "Chidambaram"
+      ],
+      [
+        "Day 6",
+        "Trichy"
+      ],
+      [
+        "Day 7",
+        "Departure"
       ]
-    },
-    {
-      name: "Kerala Backwater Tour",
-      img: "images/packages/kerala-backwater.jpg",
-      category: "domestic",
-      kicker: "Backwaters",
-      duration: "6N / 7D",
-      cities: "Cochin · Munnar · Thekkady · Alleppey",
-      itinerary: [
-        ["Day 1","Arrival Cochin"],
-        ["Day 2","Cochin – Guruvayur – Munnar"],
-        ["Day 3","Munnar"],
-        ["Day 4","Munnar – Thekkady"],
-        ["Day 5","Thekkady – Alleppey"],
-        ["Day 6","Alleppey – Cochin"],
-        ["Day 7","Cochin – Departure"]
+    ]
+  },
+  {
+    "name": "Kerala Backwater Tour",
+    "img": "images/packages/kerala-backwater.jpg",
+    "category": "domestic",
+    "kicker": "Backwaters",
+    "duration": "6N / 7D",
+    "cities": "Cochin · Munnar · Thekkady · Alleppey",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Cochin"
+      ],
+      [
+        "Day 2",
+        "Cochin – Guruvayur – Munnar"
+      ],
+      [
+        "Day 3",
+        "Munnar"
+      ],
+      [
+        "Day 4",
+        "Munnar – Thekkady"
+      ],
+      [
+        "Day 5",
+        "Thekkady – Alleppey"
+      ],
+      [
+        "Day 6",
+        "Alleppey – Cochin"
+      ],
+      [
+        "Day 7",
+        "Cochin – Departure"
       ]
-    },
-    {
-      name: "Kerala Temple Tour",
-      img: "images/packages/kerala-temple.jpg",
-      category: "pilgrimage",
-      kicker: "Temple Tour",
-      duration: "6N / 7D",
-      cities: "Cochin · Guruvayur · Trivandrum · Alleppey",
-      itinerary: [
-        ["Day 1","Arrival Cochin"],
-        ["Day 2","Guruvayur"],
-        ["Day 3","Chotanikkara"],
-        ["Day 4","Trivandrum – Kovalam"],
-        ["Day 5","Azhimala – Alleppey HB"],
-        ["Day 6","Cochin"],
-        ["Day 7","Departure"]
+    ]
+  },
+  {
+    "name": "Kerala Temple Tour",
+    "img": "images/packages/kerala-temple.jpg",
+    "category": "pilgrimage",
+    "kicker": "Temple Tour",
+    "duration": "6N / 7D",
+    "cities": "Cochin · Guruvayur · Trivandrum · Alleppey",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Cochin"
+      ],
+      [
+        "Day 2",
+        "Guruvayur"
+      ],
+      [
+        "Day 3",
+        "Chotanikkara"
+      ],
+      [
+        "Day 4",
+        "Trivandrum – Kovalam"
+      ],
+      [
+        "Day 5",
+        "Azhimala – Alleppey HB"
+      ],
+      [
+        "Day 6",
+        "Cochin"
+      ],
+      [
+        "Day 7",
+        "Departure"
       ]
-    },
-    {
-      name: "South India Temple Tour",
-      img: "images/packages/south-india-temple.jpg",
-      category: "pilgrimage",
-      kicker: "Temple Tour · 11N/12D",
-      duration: "11N / 12D",
-      cities: "Trichy · Madurai · Rameswaram · Chennai",
-      itinerary: [
-        ["Day 1","Arrival Trichy"],
-        ["Day 2","Palani"],
-        ["Day 3","Madurai"],
-        ["Day 4","Kanyakumari"],
-        ["Day 5","Tiruchendur – Rameswaram"],
-        ["Day 6","Thanjavur – Kumbakonam"],
-        ["Day 7","Thirunallar – Vaitheeswaran"],
-        ["Day 8","Thiruvannamalai"],
-        ["Day 9","Vellore – Tirupathi"],
-        ["Day 10","Kanchipuram – Chennai"],
-        ["Day 11","Chennai"],
-        ["Day 12","Departure"]
+    ]
+  },
+  {
+    "name": "South India Temple Tour",
+    "img": "images/packages/south-india-temple.jpg",
+    "category": "pilgrimage",
+    "kicker": "Temple Tour · 11N/12D",
+    "duration": "11N / 12D",
+    "cities": "Trichy · Madurai · Rameswaram · Chennai",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Trichy"
+      ],
+      [
+        "Day 2",
+        "Palani"
+      ],
+      [
+        "Day 3",
+        "Madurai"
+      ],
+      [
+        "Day 4",
+        "Kanyakumari"
+      ],
+      [
+        "Day 5",
+        "Tiruchendur – Rameswaram"
+      ],
+      [
+        "Day 6",
+        "Thanjavur – Kumbakonam"
+      ],
+      [
+        "Day 7",
+        "Thirunallar – Vaitheeswaran"
+      ],
+      [
+        "Day 8",
+        "Thiruvannamalai"
+      ],
+      [
+        "Day 9",
+        "Vellore – Tirupathi"
+      ],
+      [
+        "Day 10",
+        "Kanchipuram – Chennai"
+      ],
+      [
+        "Day 11",
+        "Chennai"
+      ],
+      [
+        "Day 12",
+        "Departure"
       ]
-    },
-    {
-      name: "Ooty – Kodaikanal",
-      img: "images/packages/ooty-kodaikanal.jpg",
-      category: "domestic",
-      kicker: "Hillstation Tour",
-      duration: "7N / 8D",
-      cities: "Trichy · Kodaikanal · Coimbatore · Ooty",
-      itinerary: [
-        ["Day 1","Arrival Trichy"],
-        ["Day 2","Kodaikanal"],
-        ["Day 3","Kodaikanal"],
-        ["Day 4","Coimbatore"],
-        ["Day 5","Ooty"],
-        ["Day 6","Ooty"],
-        ["Day 7","Trichy"],
-        ["Day 8","Departure"]
+    ]
+  },
+  {
+    "name": "Ooty – Kodaikanal",
+    "img": "images/packages/ooty-kodaikanal.jpg",
+    "category": "domestic",
+    "kicker": "Hillstation Tour",
+    "duration": "7N / 8D",
+    "cities": "Trichy · Kodaikanal · Coimbatore · Ooty",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Trichy"
+      ],
+      [
+        "Day 2",
+        "Kodaikanal"
+      ],
+      [
+        "Day 3",
+        "Kodaikanal"
+      ],
+      [
+        "Day 4",
+        "Coimbatore"
+      ],
+      [
+        "Day 5",
+        "Ooty"
+      ],
+      [
+        "Day 6",
+        "Ooty"
+      ],
+      [
+        "Day 7",
+        "Trichy"
+      ],
+      [
+        "Day 8",
+        "Departure"
       ]
-    },
-    {
-      name: "South India Tour",
-      img: "images/packages/south-india-tour.jpg",
-      category: "domestic",
-      kicker: "Temple & Hills · 9N/10D",
-      duration: "9N / 10D",
-      cities: "Trichy · Ooty · Mysore · Bangalore · Chennai",
-      itinerary: [
-        ["Day 1","Trichy"],
-        ["Day 2","Coimbatore"],
-        ["Day 3","Ooty"],
-        ["Day 4","Ooty"],
-        ["Day 5","Mysore"],
-        ["Day 6","Bangalore"],
-        ["Day 7","Bangalore"],
-        ["Day 8","Chennai"],
-        ["Day 9","Chennai"],
-        ["Day 10","Departure"]
+    ]
+  },
+  {
+    "name": "South India Tour",
+    "img": "images/packages/south-india-tour.jpg",
+    "category": "domestic",
+    "kicker": "Temple & Hills · 9N/10D",
+    "duration": "9N / 10D",
+    "cities": "Trichy · Ooty · Mysore · Bangalore · Chennai",
+    "itinerary": [
+      [
+        "Day 1",
+        "Trichy"
+      ],
+      [
+        "Day 2",
+        "Coimbatore"
+      ],
+      [
+        "Day 3",
+        "Ooty"
+      ],
+      [
+        "Day 4",
+        "Ooty"
+      ],
+      [
+        "Day 5",
+        "Mysore"
+      ],
+      [
+        "Day 6",
+        "Bangalore"
+      ],
+      [
+        "Day 7",
+        "Bangalore"
+      ],
+      [
+        "Day 8",
+        "Chennai"
+      ],
+      [
+        "Day 9",
+        "Chennai"
+      ],
+      [
+        "Day 10",
+        "Departure"
       ]
-    },
-    {
-      name: "Gem of South India",
-      img: "images/packages/gem-south-india.jpg",
-      category: "domestic",
-      kicker: "Grand Circuit",
-      duration: "15N / 16D",
-      cities: "Chennai · Ooty · Alleppey · Kanyakumari · Trichy",
-      itinerary: [
-        ["Day 1","Chennai"],
-        ["Day 2","Tirupathi"],
-        ["Day 3","Bangalore"],
-        ["Day 4","Mysore"],
-        ["Day 5","Ooty"],
-        ["Day 6","Coimbatore"],
-        ["Day 7","Munnar"],
-        ["Day 8","Munnar"],
-        ["Day 9","Thekkady"],
-        ["Day 10","Alleppey Houseboat"],
-        ["Day 11","Trivandrum"],
-        ["Day 12","Kanyakumari"],
-        ["Day 13","Rameswaram"],
-        ["Day 14","Madurai"],
-        ["Day 15","Trichy"],
-        ["Day 16","Departure"]
+    ]
+  },
+  {
+    "name": "Gem of South India",
+    "img": "images/packages/gem-south-india.jpg",
+    "category": "domestic",
+    "kicker": "Grand Circuit",
+    "duration": "15N / 16D",
+    "cities": "Chennai · Ooty · Alleppey · Kanyakumari · Trichy",
+    "itinerary": [
+      [
+        "Day 1",
+        "Chennai"
+      ],
+      [
+        "Day 2",
+        "Tirupathi"
+      ],
+      [
+        "Day 3",
+        "Bangalore"
+      ],
+      [
+        "Day 4",
+        "Mysore"
+      ],
+      [
+        "Day 5",
+        "Ooty"
+      ],
+      [
+        "Day 6",
+        "Coimbatore"
+      ],
+      [
+        "Day 7",
+        "Munnar"
+      ],
+      [
+        "Day 8",
+        "Munnar"
+      ],
+      [
+        "Day 9",
+        "Thekkady"
+      ],
+      [
+        "Day 10",
+        "Alleppey Houseboat"
+      ],
+      [
+        "Day 11",
+        "Trivandrum"
+      ],
+      [
+        "Day 12",
+        "Kanyakumari"
+      ],
+      [
+        "Day 13",
+        "Rameswaram"
+      ],
+      [
+        "Day 14",
+        "Madurai"
+      ],
+      [
+        "Day 15",
+        "Trichy"
+      ],
+      [
+        "Day 16",
+        "Departure"
       ]
-    },
-    {
-      name: "Munnar & Alleppey Romantic Escape",
-      img: "images/packages/munnar-alleppey-honeymoon.jpg",
-      category: "honeymoon",
-      kicker: "Honeymoon Special",
-      duration: "4N / 5D",
-      cities: "Cochin · Munnar · Alleppey Houseboat",
-      itinerary: [
-        ["Day 1","Arrival Cochin – Munnar"],
-        ["Day 2","Munnar sightseeing & tea gardens"],
-        ["Day 3","Munnar – Alleppey Houseboat check-in"],
-        ["Day 4","Alleppey backwaters – Cochin"],
-        ["Day 5","Cochin departure"]
+    ]
+  },
+  {
+    "name": "Munnar & Alleppey Romantic Escape",
+    "img": "images/packages/munnar-alleppey-honeymoon.jpg",
+    "category": "honeymoon",
+    "kicker": "Honeymoon Special",
+    "duration": "4N / 5D",
+    "cities": "Cochin · Munnar · Alleppey Houseboat",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Cochin – Munnar"
+      ],
+      [
+        "Day 2",
+        "Munnar sightseeing & tea gardens"
+      ],
+      [
+        "Day 3",
+        "Munnar – Alleppey Houseboat check-in"
+      ],
+      [
+        "Day 4",
+        "Alleppey backwaters – Cochin"
+      ],
+      [
+        "Day 5",
+        "Cochin departure"
       ]
-    },
-    {
-      name: "Ooty & Kodaikanal Honeymoon Special",
-      img: "images/packages/ooty-kodaikanal-honeymoon.jpg",
-      category: "honeymoon",
-      kicker: "Honeymoon Special",
-      duration: "5N / 6D",
-      cities: "Coimbatore · Ooty · Kodaikanal",
-      itinerary: [
-        ["Day 1","Arrival Coimbatore – Ooty"],
-        ["Day 2","Ooty sightseeing – lake & gardens"],
-        ["Day 3","Ooty – Kodaikanal"],
-        ["Day 4","Kodaikanal sightseeing – lake & viewpoints"],
-        ["Day 5","Kodaikanal – Coimbatore"],
-        ["Day 6","Departure"]
+    ]
+  },
+  {
+    "name": "Ooty & Kodaikanal Honeymoon Special",
+    "img": "images/packages/ooty-kodaikanal-honeymoon.jpg",
+    "category": "honeymoon",
+    "kicker": "Honeymoon Special",
+    "duration": "5N / 6D",
+    "cities": "Coimbatore · Ooty · Kodaikanal",
+    "itinerary": [
+      [
+        "Day 1",
+        "Arrival Coimbatore – Ooty"
+      ],
+      [
+        "Day 2",
+        "Ooty sightseeing – lake & gardens"
+      ],
+      [
+        "Day 3",
+        "Ooty – Kodaikanal"
+      ],
+      [
+        "Day 4",
+        "Kodaikanal sightseeing – lake & viewpoints"
+      ],
+      [
+        "Day 5",
+        "Kodaikanal – Coimbatore"
+      ],
+      [
+        "Day 6",
+        "Departure"
       ]
-    }
-  ];
+    ]
+  }
+];
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
