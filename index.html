@@ -1872,6 +1872,19 @@
     const month = bookingForm.elements.month.value;
     const notes = bookingForm.elements.notes.value.trim();
 
+    fetch('/api/enquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'booking',
+        name, phone,
+        package_name: activePackage.name,
+        travelers,
+        preferred_month: month,
+        message: notes
+      })
+    }).catch(() => {}); // never block the WhatsApp flow if this fails
+
     const lines = [
       `Hi Ayra Holidays, I'd like to reserve seats for the "${activePackage.name}" (${activePackage.duration}) package.`,
       `Name: ${name}`,
@@ -1994,6 +2007,12 @@
     const email = enquireForm.elements.email.value.trim();
     const phone = enquireForm.elements.phone.value.trim();
     const message = enquireForm.elements.message.value.trim();
+
+    fetch('/api/enquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'enquiry', name, phone, email, message })
+    }).catch(() => {}); // never block the WhatsApp flow if this fails
 
     const lines = [
       `Hi Ayra Holidays, I'd like to enquire about a trip.`,
