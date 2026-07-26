@@ -4,10 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ayra Holidays — Premium Tour & Travels</title>
+<meta name="description" content="Ayra Holidays offers curated South India tour packages across Kerala, temple circuits, hill stations and honeymoon escapes — AC coach, stay, meals and a guide included on every route.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ayraholidays.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ayra Holidays — Premium Tour & Travels">
+<meta property="og:description" content="Curated South India tour packages — Kerala, temple circuits, hill stations and honeymoon escapes. AC coach, stay, meals and guides included.">
+<meta property="og:url" content="https://ayraholidays.vercel.app/">
+<meta property="og:image" content="images/hero-poster.jpg">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none';">
 <link rel="icon" type="image/png" href="images/ayra-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Cormorant+SC:wght@600&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Cormorant+SC:wght@600&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Cormorant+SC:wght@600&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all';this.onload=null;">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Cormorant+SC:wght@600&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"></noscript>
 <style>
   :root{
     --ink:#12203D;
@@ -1137,19 +1149,19 @@
       <span class="brand-sub">Tour &amp; Travels</span>
     </span>
   </a>
-  <nav class="links">
+  <nav class="links" id="site-nav-links">
     <a href="#top">Home</a>
     <a href="#packages">Packages</a>
     <a href="#gallery">Gallery</a>
     <a href="#why">Why Ayra</a>
     <a href="#contact">Contact</a>
   </nav>
-  <button class="nav-toggle" aria-label="menu">&#9776;</button>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav-links">&#9776;</button>
 </header>
 
 <section class="hero" id="top">
   <div class="hero-video-wrap" id="heroVideoWrap">
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="images/hero-poster.jpg">
+    <video id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="images/hero-poster.jpg">
       <source src="videos/hero.mp4" type="video/mp4">
       <source src="videos/hero.webm" type="video/webm">
     </video>
@@ -1198,13 +1210,13 @@
     <p>Ten curated itineraries across three kinds of journeys — everyday sightseeing, romantic getaways and temple circuits — each priced and paced for a comfortable trip.</p>
   </div>
 
-  <div class="pkg-tabs reveal" role="tablist">
-    <button type="button" class="pkg-tab active" data-cat="domestic" role="tab" aria-selected="true">Domestic</button>
-    <button type="button" class="pkg-tab" data-cat="honeymoon" role="tab" aria-selected="false">Honeymoon</button>
-    <button type="button" class="pkg-tab" data-cat="pilgrimage" role="tab" aria-selected="false">Pilgrimage</button>
+  <div class="pkg-tabs reveal" role="tablist" aria-label="Package category">
+    <button type="button" class="pkg-tab active" data-cat="domestic" id="tab-domestic" role="tab" aria-selected="true" aria-controls="packages-grid">Domestic</button>
+    <button type="button" class="pkg-tab" data-cat="honeymoon" id="tab-honeymoon" role="tab" aria-selected="false" aria-controls="packages-grid" tabindex="-1">Honeymoon</button>
+    <button type="button" class="pkg-tab" data-cat="pilgrimage" id="tab-pilgrimage" role="tab" aria-selected="false" aria-controls="packages-grid" tabindex="-1">Pilgrimage</button>
   </div>
 
-  <div class="grid" id="packages-grid"></div>
+  <div class="grid" id="packages-grid" role="tabpanel" aria-labelledby="tab-domestic"></div>
 </section>
 
 <section id="gallery" class="gallery">
@@ -1216,35 +1228,35 @@
   <div class="gallery-grid reveal">
     <div class="gallery-item tall">
       <img src="photos/photo-1.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
     <div class="gallery-item">
       <img src="photos/photo-2.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
     <div class="gallery-item">
       <img src="photos/photo-3.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
     <div class="gallery-item wide">
       <img src="photos/photo-4.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
     <div class="gallery-item">
       <img src="photos/photo-5.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
     <div class="gallery-item tall">
       <img src="photos/photo-6.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
     <div class="gallery-item">
       <img src="photos/photo-7.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
     <div class="gallery-item">
       <img src="photos/photo-8.jpg" alt="Ayra Holidays travel photo" loading="lazy" onerror="this.parentElement.classList.add('is-empty')">
-      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
+      <div class="gallery-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-3-3-4 4"/></svg><span>Add Photo</span></div>
     </div>
   </div>
 </section>
@@ -1287,17 +1299,17 @@
       <p>Call, WhatsApp or write in for seat availability, batch dates and group pricing on any of our routes.</p>
       <div class="phone-list">
         <a href="tel:+918754453654" class="phone-row">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           <span><span class="label">Reservations</span><span class="num">+91 87544 53654</span></span>
         </a>
         <a href="tel:+917358840521" class="phone-row">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           <span><span class="label">Enquiries</span><span class="num">+91 73588 40521</span></span>
         </a>
       </div>
       <div class="socials">
-        <a class="social-btn" href="https://www.instagram.com/ayra_holidays0709/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-        <a class="social-btn" href="https://wa.me/918754453654" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a class="social-btn" href="https://www.instagram.com/ayra_holidays0709/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a class="social-btn" href="https://wa.me/918754453654" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
       </div>
     </div>
 
@@ -1314,12 +1326,12 @@
   </div>
 </section>
 
-<a href="https://wa.me/918754453654" target="_blank" rel="noopener" class="float-wa" aria-label="Chat on WhatsApp">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<a href="https://wa.me/918754453654" target="_blank" rel="noopener noreferrer" class="float-wa" aria-label="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <button type="button" class="enquire-tab" id="enquireTabBtn" aria-label="Open enquiry form">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
   Enquire Now
 </button>
 
@@ -1335,9 +1347,9 @@
       </a>
       <p>Curated South India tour packages across Kerala, temple circuits, hill stations and honeymoon escapes — AC coach, stay, meals and a guide included on every route.</p>
       <div class="footer-socials">
-        <a class="footer-social-btn" href="https://www.instagram.com/ayra_holidays0709/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-        <a class="footer-social-btn" href="https://wa.me/918754453654" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-        <a class="footer-social-btn" href="tel:+918754453654" aria-label="Call"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+        <a class="footer-social-btn" href="https://www.instagram.com/ayra_holidays0709/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a class="footer-social-btn" href="https://wa.me/918754453654" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a class="footer-social-btn" href="tel:+918754453654" aria-label="Call"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
       </div>
     </div>
 
@@ -1364,7 +1376,7 @@
       </div>
       <div class="footer-support-item">
         <span class="fs-label">WhatsApp</span>
-        <a class="fs-value" href="https://wa.me/918754453654" target="_blank" rel="noopener">Chat with us</a>
+        <a class="fs-value" href="https://wa.me/918754453654" target="_blank" rel="noopener noreferrer">Chat with us</a>
       </div>
       <div class="footer-support-item">
         <span class="fs-label">Support Hours</span>
@@ -1379,12 +1391,12 @@
     <div class="footer-col">
       <h4>Follow Us</h4>
       <div class="footer-follow-handles">
-        <a class="footer-follow-item" href="https://www.instagram.com/ayra_holidays0709/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        <a class="footer-follow-item" href="https://www.instagram.com/ayra_holidays0709/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
           <span>@ayra_holidays0709</span>
         </a>
-        <a class="footer-follow-item" href="https://wa.me/918754453654" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <a class="footer-follow-item" href="https://wa.me/918754453654" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           <span>+91 87544 53654</span>
         </a>
       </div>
@@ -1400,7 +1412,7 @@
   </div>
 </footer>
 
-<div class="booking-overlay" id="bookingOverlay" aria-hidden="true">
+<div class="booking-overlay" id="bookingOverlay" aria-hidden="true" inert>
   <div class="booking-modal" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
     <button class="booking-close" id="bookingClose" type="button" aria-label="Close booking form">&times;</button>
 
@@ -1425,7 +1437,7 @@
     </div>
 
     <div id="bookingSuccessView" hidden>
-      <div class="success-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="success-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><path d="M20 6L9 17l-5-5"/></svg></div>
       <h3>Request on its way</h3>
       <p>We've opened WhatsApp with your seat request for <b id="successPkgName"></b>. Our team will confirm availability shortly.</p>
       <button type="button" class="btn btn-ghost" id="bookingDone" style="border-color:var(--line);color:var(--ink);width:100%;justify-content:center;">Done</button>
@@ -1433,7 +1445,7 @@
   </div>
 </div>
 
-<div class="booking-overlay" id="infoOverlay" aria-hidden="true">
+<div class="booking-overlay" id="infoOverlay" aria-hidden="true" inert>
   <div class="booking-modal" role="dialog" aria-modal="true" aria-labelledby="infoTitle" style="text-align:left;">
     <button class="booking-close" id="infoClose" type="button" aria-label="Close">&times;</button>
     <div class="eyebrow" id="infoEyebrow">Information</div>
@@ -1442,7 +1454,7 @@
   </div>
 </div>
 
-<div class="booking-overlay" id="enquireOverlay" aria-hidden="true">
+<div class="booking-overlay" id="enquireOverlay" aria-hidden="true" inert>
   <div class="booking-modal enquire-modal" role="dialog" aria-modal="true" aria-labelledby="enquireFormTitle">
     <button class="booking-close" id="enquireClose" type="button" aria-label="Close enquiry form" style="z-index:2;">&times;</button>
     <div class="enquire-visual" id="enquireVideoWrap">
@@ -1454,7 +1466,7 @@
         <h4>Plan Your Dream <em>Vacation</em></h4>
         <p>Tell us where you'd like to go and our travel specialists will get back to you with the perfect itinerary.</p>
         <div class="enquire-quick">
-          <a class="qa-wa" href="https://wa.me/918754453654" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="qa-wa" href="https://wa.me/918754453654" target="_blank" rel="noopener noreferrer">WhatsApp</a>
           <a class="qa-call" href="tel:+918754453654">Call Us</a>
         </div>
       </div>
@@ -1673,13 +1685,27 @@
   const catLabels = { domestic: 'Domestic', honeymoon: 'Honeymoon', pilgrimage: 'Pilgrimage' };
   const grid = document.getElementById('packages-grid');
 
+  const lazyBgObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      const el = entry.target;
+      const src = el.dataset.bg;
+      if(!src) return;
+      const probe = new Image();
+      probe.onload = () => { el.style.backgroundImage = `url('${src}')`; };
+      probe.onerror = () => { el.style.backgroundImage = 'none'; };
+      probe.src = src;
+      lazyBgObserver.unobserve(el);
+    });
+  }, { rootMargin: '200px 0px' });
+
   function renderPackages(cat, initial){
     grid.innerHTML = '';
     packages.filter(p => p.category === cat).forEach((p, idx) => {
       const card = document.createElement('article');
       card.className = 'ticket reveal';
       card.innerHTML = `
-        <div class="ticket-top cat-bg-${p.category}" style="background-image:url('${p.img}')">
+        <div class="ticket-top cat-bg-${p.category}" data-bg="${p.img}">
           <div class="ticket-badges">
             <span class="cat-pill cat-${p.category}">${catLabels[p.category]}</span>
             <span class="ticket-badge">${p.duration}</span>
@@ -1692,7 +1718,7 @@
         <div class="ticket-bottom">
           <button class="itin-toggle" aria-expanded="false">
             View Itinerary
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
           </button>
           <div class="itin-body">
             <ul class="itin-list">
@@ -1706,16 +1732,17 @@
       card.style.transitionDelay = ((idx % 3) * 0.09).toFixed(2) + 's';
 
       const topEl = card.querySelector('.ticket-top');
-      const probe = new Image();
-      probe.onerror = () => { topEl.style.backgroundImage = 'none'; };
-      probe.src = p.img;
+      lazyBgObserver.observe(topEl);
 
       const toggle = card.querySelector('.itin-toggle');
       const body = card.querySelector('.itin-body');
       toggle.addEventListener('click', () => {
-        const isOpen = toggle.classList.toggle('open');
+        const isOpen = !toggle.classList.contains('open');
+        // Read layout first, then batch all writes, to avoid a forced synchronous reflow.
+        const targetHeight = isOpen ? body.scrollHeight : 0;
+        toggle.classList.toggle('open', isOpen);
         toggle.setAttribute('aria-expanded', isOpen);
-        body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0';
+        body.style.maxHeight = isOpen ? targetHeight + 'px' : '0';
         toggle.firstChild.textContent = isOpen ? 'Hide Itinerary ' : 'View Itinerary ';
       });
 
@@ -1725,13 +1752,21 @@
       else{ card.classList.add('show'); }
 
       if(canHover && !prefersReduced){
+        let cardRect = null;
+        let cardRaf = null;
+        card.addEventListener('mouseenter', () => { cardRect = card.getBoundingClientRect(); });
         card.addEventListener('mousemove', (e) => {
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width - 0.5;
-          const y = (e.clientY - r.top) / r.height - 0.5;
-          card.style.transform = `perspective(1000px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg) translateY(-12px)`;
+          if(!cardRect) cardRect = card.getBoundingClientRect();
+          if(cardRaf) return;
+          cardRaf = requestAnimationFrame(() => {
+            const x = (e.clientX - cardRect.left) / cardRect.width - 0.5;
+            const y = (e.clientY - cardRect.top) / cardRect.height - 0.5;
+            card.style.transform = `perspective(1000px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg) translateY(-12px)`;
+            cardRaf = null;
+          });
         });
         card.addEventListener('mouseleave', () => {
+          cardRect = null;
           card.style.transition = 'transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease';
           card.style.transform = '';
         });
@@ -1742,9 +1777,15 @@
   document.querySelectorAll('.pkg-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       if(tab.classList.contains('active')) return;
-      document.querySelectorAll('.pkg-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.pkg-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected','false');
+        t.setAttribute('tabindex','-1');
+      });
       tab.classList.add('active');
       tab.setAttribute('aria-selected','true');
+      tab.setAttribute('tabindex','0');
+      grid.setAttribute('aria-labelledby', tab.id);
       grid.style.opacity = '0';
       setTimeout(() => {
         renderPackages(tab.dataset.cat, false);
@@ -1802,12 +1843,14 @@
     bookingForm.elements.travelers.value = 2;
     bookingOverlay.classList.add('active');
     bookingOverlay.setAttribute('aria-hidden', 'false');
+    bookingOverlay.removeAttribute('inert');
     document.body.style.overflow = 'hidden';
     setTimeout(() => bookingForm.elements.name.focus(), prefersReduced ? 0 : 380);
   }
   function closeBooking(){
     bookingOverlay.classList.remove('active');
     bookingOverlay.setAttribute('aria-hidden', 'true');
+    bookingOverlay.setAttribute('inert', '');
     document.body.style.overflow = '';
     if(lastFocused) lastFocused.focus();
   }
@@ -1896,11 +1939,13 @@
     infoBody.innerHTML = data.html;
     infoOverlay.classList.add('active');
     infoOverlay.setAttribute('aria-hidden', 'false');
+    infoOverlay.removeAttribute('inert');
     document.body.style.overflow = 'hidden';
   }
   function closeInfo(){
     infoOverlay.classList.remove('active');
     infoOverlay.setAttribute('aria-hidden', 'true');
+    infoOverlay.setAttribute('inert', '');
     document.body.style.overflow = '';
     if(lastFocusedInfo) lastFocusedInfo.focus();
   }
@@ -1923,6 +1968,7 @@
     enquireForm.reset();
     enquireOverlay.classList.add('active');
     enquireOverlay.setAttribute('aria-hidden', 'false');
+    enquireOverlay.removeAttribute('inert');
     document.body.style.overflow = 'hidden';
     setTimeout(() => enquireForm.elements.name.focus(), prefersReduced ? 0 : 380);
     const enquireVideoEl = document.getElementById('enquireVideo');
@@ -1934,6 +1980,7 @@
   function closeEnquire(){
     enquireOverlay.classList.remove('active');
     enquireOverlay.setAttribute('aria-hidden', 'true');
+    enquireOverlay.setAttribute('inert', '');
     document.body.style.overflow = '';
     if(lastFocusedEnquire) lastFocusedEnquire.focus();
   }
@@ -2034,13 +2081,21 @@
 
   if(canHover && !prefersReduced){
     document.querySelectorAll('.btn').forEach(btn => {
+      let btnRect = null;
+      let btnRaf = null;
+      btn.addEventListener('mouseenter', () => { btnRect = btn.getBoundingClientRect(); });
       btn.addEventListener('mousemove', (e) => {
-        const r = btn.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width / 2) * 0.25;
-        const y = (e.clientY - r.top - r.height / 2) * 0.4;
-        btn.style.transform = `translate(${x}px, ${y}px)`;
+        if(!btnRect) btnRect = btn.getBoundingClientRect();
+        if(btnRaf) return;
+        btnRaf = requestAnimationFrame(() => {
+          const x = (e.clientX - btnRect.left - btnRect.width / 2) * 0.25;
+          const y = (e.clientY - btnRect.top - btnRect.height / 2) * 0.4;
+          btn.style.transform = `translate(${x}px, ${y}px)`;
+          btnRaf = null;
+        });
       });
       btn.addEventListener('mouseleave', () => {
+        btnRect = null;
         btn.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1)';
         btn.style.transform = '';
       });
