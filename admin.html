@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayra Holidays — Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --ink:#12203D; --ink-2:#1B2E52; --gold:#C9A24B; --gold-soft:#E4C77E;
+    --parchment:#F3EEE0; --line:#D8CDAE; --ink-text:#20263A; --muted:#6B6555;
+    --maroon:#7A1F2B; --good:#25D366; --warn:#C9A24B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--parchment);color:var(--ink-text);}
+  a{color:inherit;}
+
+  /* ---- Login screen ---- */
+  #loginScreen{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#1E3560 0%,#12203D 55%,#0B1730 100%);
+    padding:24px;
+  }
+  .login-box{
+    background:var(--parchment);border-radius:10px;padding:40px 36px;max-width:360px;width:100%;
+    box-shadow:0 30px 70px rgba(0,0,0,.4);
+  }
+  .login-box h1{font-size:1.3rem;margin-bottom:6px;color:var(--ink);}
+  .login-box p{font-size:.85rem;color:var(--muted);margin-bottom:22px;}
+  .login-box input{
+    width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:6px;font-size:.95rem;margin-bottom:14px;
+  }
+  .login-box button{
+    width:100%;padding:12px;border:none;border-radius:6px;background:var(--gold);color:var(--ink);
+    font-weight:700;font-size:.9rem;cursor:pointer;letter-spacing:.02em;
+  }
+  .login-error{color:var(--maroon);font-size:.82rem;margin-bottom:10px;min-height:1em;}
+
+  /* ---- Shell ---- */
+  #adminShell{display:none;min-height:100vh;}
+  header.admin-header{
+    background:var(--ink);color:var(--parchment);padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;
+    border-bottom:3px solid var(--gold);
+  }
+  header.admin-header h1{font-size:1.15rem;font-weight:700;}
+  header.admin-header .right{display:flex;gap:14px;align-items:center;font-size:.85rem;}
+  header.admin-header a.live-link{color:var(--gold-soft);text-decoration:underline;}
+  header.admin-header button.logout{
+    background:transparent;border:1px solid rgba(243,238,224,.4);color:var(--parchment);
+    padding:7px 14px;border-radius:6px;cursor:pointer;font-size:.8rem;
+  }
+
+  nav.tabs{display:flex;gap:8px;padding:18px 28px 0;background:var(--parchment);border-bottom:1px solid var(--line);}
+  nav.tabs button{
+    padding:11px 22px;border:none;background:none;font-size:.9rem;font-weight:600;color:var(--muted);
+    cursor:pointer;border-bottom:3px solid transparent;
+  }
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--gold);}
+
+  main{padding:28px;max-width:1100px;margin:0 auto;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+  .btn{
+    padding:10px 20px;border:none;border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer;
+  }
+  .btn-primary{background:var(--gold);color:var(--ink);}
+  .btn-ghost{background:#fff;border:2px solid var(--line);color:var(--ink-text);}
+  .btn-danger{background:#fff;border:2px solid var(--maroon);color:var(--maroon);}
+  .btn-small{padding:6px 12px;font-size:.75rem;}
+
+  .status-msg{font-size:.82rem;padding:8px 0;color:var(--muted);}
+  .status-msg.error{color:var(--maroon);}
+  .status-msg.ok{color:#1a7a3c;}
+
+  /* ---- Package cards ---- */
+  .pkg-card{
+    background:#fff;border:2px solid var(--line);border-radius:8px;padding:18px 20px;margin-bottom:14px;
+    display:flex;gap:16px;align-items:flex-start;
+  }
+  .pkg-card img{width:90px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0;background:#eee;}
+  .pkg-card .info{flex:1;min-width:0;}
+  .pkg-card h3{font-size:1.02rem;margin-bottom:4px;}
+  .pkg-card .meta{font-size:.78rem;color:var(--muted);margin-bottom:2px;}
+  .pkg-card .actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;}
+
+  /* ---- Edit form (modal-ish inline panel) ---- */
+  .edit-panel{
+    background:#fff;border:2px solid var(--gold);border-radius:8px;padding:24px;margin-bottom:24px;
+  }
+  .edit-panel h3{margin-bottom:16px;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .field label{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px;font-weight:600;}
+  .field input,.field select,.field textarea{
+    width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:6px;font-size:.9rem;
+  }
+  .itin-row{display:flex;gap:8px;margin-bottom:8px;align-items:center;}
+  .itin-row input{flex:1;}
+  .itin-row input.day-input{max-width:100px;flex:none;}
+  .img-upload-row{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+  .img-upload-row img{width:120px;height:80px;object-fit:cover;border-radius:6px;background:#eee;}
+
+  /* ---- Gallery tiles ---- */
+  .gallery-grid-admin{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .gtile{background:#fff;border:2px solid var(--line);border-radius:8px;overflow:hidden;}
+  .gtile img{width:100%;height:140px;object-fit:cover;display:block;background:#eee;}
+  .gtile .gtile-foot{padding:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .gtile .gtile-foot label{
+    font-size:.78rem;font-weight:700;color:var(--ink);cursor:pointer;padding:6px 12px;border:2px solid var(--line);border-radius:20px;
+  }
+  .gtile .gtile-foot label:hover{border-color:var(--gold);}
+
+  /* ---- Enquiries table ---- */
+  table.enq-table{width:100%;border-collapse:collapse;background:#fff;border:2px solid var(--line);border-radius:8px;overflow:hidden;}
+  table.enq-table th,table.enq-table td{padding:10px 12px;text-align:left;font-size:.8rem;border-bottom:1px solid var(--line);}
+  table.enq-table th{background:var(--ink);color:var(--parchment);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;}
+  table.enq-table select{padding:5px 8px;border-radius:5px;border:1px solid var(--line);font-size:.78rem;}
+  .type-pill{padding:3px 9px;border-radius:12px;font-size:.68rem;font-weight:700;}
+  .type-pill.booking{background:#E4C77E33;color:#8a6a1a;}
+  .type-pill.enquiry{background:#7A1F2B22;color:var(--maroon);}
+
+  @media (max-width:760px){
+    .field-row{grid-template-columns:1fr;}
+    .gallery-grid-admin{grid-template-columns:repeat(2,1fr);}
+    .pkg-card{flex-direction:column;}
+    table.enq-table{display:block;overflow-x:auto;white-space:nowrap;}
+  }
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>Ayra Holidays Admin</h1>
+    <p>Enter the admin password to continue.</p>
+    <div class="login-error" id="loginError"></div>
+    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button id="loginBtn">Log In</button>
+  </div>
+</div>
+
+<div id="adminShell">
+  <header class="admin-header">
+    <h1>Ayra Holidays — Admin</h1>
+    <div class="right">
+      <a class="live-link" href="/" target="_blank" rel="noopener">View live site ↗</a>
+      <button class="logout" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="packages">Packages</button>
+    <button class="tab-btn" data-tab="gallery">Gallery</button>
+    <button class="tab-btn" data-tab="enquiries">Enquiries</button>
+  </nav>
+
+  <main>
+    <!-- ===== PACKAGES ===== -->
+    <section class="panel active" id="panel-packages">
+      <div class="toolbar">
+        <div id="pkgStatus" class="status-msg"></div>
+        <button class="btn btn-primary" id="addPkgBtn">+ Add Package</button>
+      </div>
+      <div id="pkgEditHolder"></div>
+      <div id="pkgList"></div>
+    </section>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="panel" id="panel-gallery">
+      <div class="toolbar">
+        <div id="galStatus" class="status-msg"></div>
+        <button class="btn btn-ghost" id="refreshGalBtn">Refresh</button>
+      </div>
+      <div class="gallery-grid-admin" id="galGrid"></div>
+    </section>
+
+    <!-- ===== ENQUIRIES ===== -->
+    <section class="panel" id="panel-enquiries">
+      <div class="toolbar">
+        <div id="enqStatus" class="status-msg"></div>
+        <button class="btn btn-ghost" id="refreshEnqBtn">Refresh</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="enq-table" id="enqTable">
+          <thead>
+            <tr>
+              <th>When</th><th>Type</th><th>Name</th><th>Phone</th><th>Email</th>
+              <th>Package</th><th>Travelers</th><th>Month</th><th>Message</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="enqBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // ---- Cloudinary config (safe to expose — unsigned preset, no secret key) ----
+  const CLOUDINARY_CLOUD_NAME = 'do2topls5';
+  const CLOUDINARY_UPLOAD_PRESET = 'ayra_holidays'; // confirm exact preset key matches Cloudinary dashboard
+
+  const CATEGORIES = ['domestic','honeymoon','pilgrimage'];
+
+  // ---------------- Auth ----------------
+  function getKey(){ return sessionStorage.getItem('ayra_admin_key') || ''; }
+  function setKey(k){ sessionStorage.setItem('ayra_admin_key', k); }
+  function clearKey(){ sessionStorage.removeItem('ayra_admin_key'); }
+
+  function showLogin(){
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('adminShell').style.display = 'none';
+  }
+  function showShell(){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminShell').style.display = 'block';
+    loadPackages();
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('loginPassword').addEventListener('keydown', e => { if(e.key === 'Enter') doLogin(); });
+
+  async function doLogin(){
+    const pw = document.getElementById('loginPassword').value;
+    const errEl = document.getElementById('loginError');
+    errEl.textContent = '';
+    try{
+      const resp = await fetch('/api/admin-login', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ password: pw })
+      });
+      if(resp.ok){
+        setKey(pw);
+        showShell();
+      } else {
+        errEl.textContent = 'Incorrect password.';
+      }
+    } catch(e){
+      errEl.textContent = 'Could not reach server. Try again.';
+    }
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', () => { clearKey(); showLogin(); });
+
+  // Wrapper for authenticated admin API calls; bounces to login on 401.
+  async function adminFetch(url, opts = {}){
+    const headers = Object.assign({}, opts.headers || {}, { 'x-admin-key': getKey() });
+    const resp = await fetch(url, Object.assign({}, opts, { headers }));
+    if(resp.status === 401){ clearKey(); showLogin(); throw new Error('Unauthorized'); }
+    return resp;
+  }
+
+  if(getKey()){ showShell(); } else { showLogin(); }
+
+  // ---------------- Tabs ----------------
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      document.getElementById('panel-' + tab).classList.add('active');
+      if(tab === 'gallery') loadGallery();
+      if(tab === 'enquiries') loadEnquiries();
+    });
+  });
+
+  // ---------------- Cloudinary upload ----------------
+  async function uploadToCloudinary(file){
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    const resp = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+      method:'POST', body: fd
+    });
+    if(!resp.ok) throw new Error('Cloudinary upload failed');
+    const data = await resp.json();
+    return data.secure_url;
+  }
+
+  // ================= PACKAGES =================
+  let packagesCache = [];
+
+  async function loadPackages(){
+    const statusEl = document.getElementById('pkgStatus');
+    statusEl.textContent = 'Loading packages…';
+    statusEl.className = 'status-msg';
+    try{
+      const resp = await adminFetch('/api/admin-packages');
+      const data = await resp.json();
+      packagesCache = data.packages || [];
+      renderPkgList();
+      statusEl.textContent = `${packagesCache.length} packages loaded.`;
+    } catch(e){
+      statusEl.textContent = 'Failed to load packages: ' + e.message;
+      statusEl.className = 'status-msg error';
+    }
+  }
+
+  function renderPkgList(){
+    const list = document.getElementById('pkgList');
+    list.innerHTML = '';
+    packagesCache.forEach((p, idx) => {
+      const card = document.createElement('div');
+      card.className = 'pkg-card';
+      card.innerHTML = `
+        <img src="${p.img || ''}" alt="">
+        <div class="info">
+          <h3>${p.name || '(untitled)'}</h3>
+          <div class="meta">${p.category || ''} · ${p.duration || ''}</div>
+          <div class="meta">${p.cities || ''}</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost btn-small" data-act="up">↑</button>
+          <button class="btn btn-ghost btn-small" data-act="down">↓</button>
+          <button class="btn btn-ghost btn-small" data-act="edit">Edit</button>
+          <button class="btn btn-danger btn-small" data-act="delete">Delete</button>
+        </div>
+      `;
+      card.querySelector('[data-act="edit"]').addEventListener('click', () => openEditPanel(idx));
+      card.querySelector('[data-act="delete"]').addEventListener('click', () => deletePkg(idx));
+      card.querySelector('[data-act="up"]').addEventListener('click', () => movePkg(idx, -1));
+      card.querySelector('[data-act="down"]').addEventListener('click', () => movePkg(idx, 1));
+      list.appendChild(card);
+    });
+  }
+
+  function movePkg(idx, dir){
+    const newIdx = idx + dir;
+    if(newIdx < 0 || newIdx >= packagesCache.length) return;
+    const tmp = packagesCache[idx];
+    packagesCache[idx] = packagesCache[newIdx];
+    packagesCache[newIdx] = tmp;
+    renderPkgList();
+    savePackages('Reordered packages.');
+  }
+
+  function deletePkg(idx){
+    if(!confirm(`Delete "${packagesCache[idx].name}"? This publishes immediately.`)) return;
+    packagesCache.splice(idx, 1);
+    renderPkgList();
+    savePackages('Package deleted.');
+  }
+
+  document.getElementById('addPkgBtn').addEventListener('click', () => {
+    packagesCache.push({
+      name: '', img: '', category: 'domestic', kicker: '', duration: '', cities: '', itinerary: []
+    });
+    openEditPanel(packagesCache.length - 1);
+  });
+
+  function openEditPanel(idx){
+    const p = packagesCache[idx];
+    const holder = document.getElementById('pkgEditHolder');
+    holder.innerHTML = `
+      <div class="edit-panel">
+        <h3>Edit Package</h3>
+        <div class="img-upload-row">
+          <img id="editImgPreview" src="${p.img || ''}" alt="">
+          <div>
+            <input type="file" id="editImgFile" accept="image/*">
+            <div class="status-msg" id="editImgStatus"></div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Name</label><input id="f-name" value="${escapeAttr(p.name)}"></div>
+          <div class="field"><label>Category</label>
+            <select id="f-category">
+              ${CATEGORIES.map(c => `<option value="${c}" ${c===p.category?'selected':''}>${c}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Kicker (small label)</label><input id="f-kicker" value="${escapeAttr(p.kicker)}"></div>
+          <div class="field"><label>Duration (e.g. 5N / 6D)</label><input id="f-duration" value="${escapeAttr(p.duration)}"></div>
+        </div>
+        <div class="field">
+          <label>Cities</label><input id="f-cities" value="${escapeAttr(p.cities)}" style="margin-bottom:14px;">
+        </div>
+        <div class="field">
+          <label>Itinerary</label>
+          <div id="itinRows"></div>
+          <button type="button" class="btn btn-ghost btn-small" id="addItinRow" style="margin-top:6px;">+ Add Day</button>
+        </div>
+        <div style="margin-top:20px;display:flex;gap:10px;">
+          <button class="btn btn-primary" id="saveEditBtn">Save &amp; Publish</button>
+          <button class="btn btn-ghost" id="cancelEditBtn">Cancel</button>
+        </div>
+      </div>
+    `;
+
+    const itinRows = document.getElementById('itinRows');
+    function renderItinRows(){
+      itinRows.innerHTML = '';
+      (p.itinerary || []).forEach((row, i) => {
+        const r = document.createElement('div');
+        r.className = 'itin-row';
+        r.innerHTML = `
+          <input class="day-input" placeholder="Day 1" value="${escapeAttr(row[0])}">
+          <input placeholder="Description" value="${escapeAttr(row[1])}">
+          <button type="button" class="btn btn-danger btn-small">✕</button>
+        `;
+        const [dayInput, descInput, delBtn] = r.querySelectorAll('input,button');
+        dayInput.addEventListener('input', () => { p.itinerary[i][0] = dayInput.value; });
+        descInput.addEventListener('input', () => { p.itinerary[i][1] = descInput.value; });
+        delBtn.addEventListener('click', () => { p.itinerary.splice(i,1); renderItinRows(); });
+        itinRows.appendChild(r);
+      });
+    }
+    if(!p.itinerary) p.itinerary = [];
+    renderItinRows();
+
+    document.getElementById('addItinRow').addEventListener('click', () => {
+      p.itinerary.push(['Day ' + (p.itinerary.length+1), '']);
+      renderItinRows();
+    });
+
+    document.getElementById('editImgFile').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if(!file) return;
+      const statusEl = document.getElementById('editImgStatus');
+      statusEl.textContent = 'Uploading…';
+      try{
+        const url = await uploadToCloudinary(file);
+        p.img = url;
+        document.getElementById('editImgPreview').src = url;
+        statusEl.textContent = 'Uploaded.';
+        statusEl.className = 'status-msg ok';
+      } catch(err){
+        statusEl.textContent = 'Upload failed: ' + err.message;
+        statusEl.className = 'status-msg error';
+      }
+    });
+
+    document.getElementById('cancelEditBtn').addEventListener('click', () => {
+      holder.innerHTML = '';
+      loadPackages(); // discard unsaved in-memory edits by reloading from server
+    });
+
+    document.getElementById('saveEditBtn').addEventListener('click', () => {
+      p.name = document.getElementById('f-name').value.trim();
+      p.category = document.getElementById('f-category').value;
+      p.kicker = document.getElementById('f-kicker').value.trim();
+      p.duration = document.getElementById('f-duration').value.trim();
+      p.cities = document.getElementById('f-cities').value.trim();
+      holder.innerHTML = '';
+      renderPkgList();
+      savePackages('Package saved.');
+    });
+  }
+
+  async function savePackages(successMsg){
+    const statusEl = document.getElementById('pkgStatus');
+    statusEl.textContent = 'Publishing…';
+    statusEl.className = 'status-msg';
+    try{
+      const resp = await adminFetch('/api/admin-packages', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ packages: packagesCache })
+      });
+      if(!resp.ok){
+        const data = await resp.json().catch(()=>({}));
+        throw new Error(data.error || 'Unknown error');
+      }
+      statusEl.textContent = (successMsg || 'Saved.') + ' Live in ~30s once Vercel redeploys.';
+      statusEl.className = 'status-msg ok';
+    } catch(e){
+      statusEl.textContent = 'Failed to publish: ' + e.message;
+      statusEl.className = 'status-msg error';
+    }
+  }
+
+  function escapeAttr(str){
+    return (str || '').toString().replace(/"/g, '&quot;');
+  }
+
+  // ================= GALLERY =================
+  document.getElementById('refreshGalBtn').addEventListener('click', loadGallery);
+
+  async function loadGallery(){
+    const statusEl = document.getElementById('galStatus');
+    statusEl.textContent = 'Loading gallery…';
+    statusEl.className = 'status-msg';
+    try{
+      const resp = await adminFetch('/api/admin-gallery');
+      const data = await resp.json();
+      renderGallery(data.tiles || []);
+      statusEl.textContent = `${(data.tiles||[]).length} tiles loaded.`;
+    } catch(e){
+      statusEl.textContent = 'Failed to load gallery: ' + e.message;
+      statusEl.className = 'status-msg error';
+    }
+  }
+
+  function renderGallery(tiles){
+    const grid = document.getElementById('galGrid');
+    grid.innerHTML = '';
+    tiles.forEach((src, idx) => {
+      const tile = document.createElement('div');
+      tile.className = 'gtile';
+      tile.innerHTML = `
+        <img src="${src}" alt="">
+        <div class="gtile-foot">
+          <span style="font-size:.72rem;color:var(--muted);">Tile ${idx+1}</span>
+          <label>Replace<input type="file" accept="image/*" style="display:none;"></label>
+        </div>
+      `;
+      const input = tile.querySelector('input[type="file"]');
+      input.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if(!file) return;
+        const statusEl = document.getElementById('galStatus');
+        statusEl.textContent = `Uploading tile ${idx+1}…`;
+        try{
+          const url = await uploadToCloudinary(file);
+          const resp = await adminFetch('/api/admin-gallery', {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ index: idx, newSrc: url })
+          });
+          if(!resp.ok){
+            const data = await resp.json().catch(()=>({}));
+            throw new Error(data.error || 'Unknown error');
+          }
+          statusEl.textContent = `Tile ${idx+1} updated. Live in ~30s.`;
+          statusEl.className = 'status-msg ok';
+          loadGallery();
+        } catch(err){
+          statusEl.textContent = 'Failed: ' + err.message;
+          statusEl.className = 'status-msg error';
+        }
+      });
+      grid.appendChild(tile);
+    });
+  }
+
+  // ================= ENQUIRIES =================
+  document.getElementById('refreshEnqBtn').addEventListener('click', loadEnquiries);
+
+  async function loadEnquiries(){
+    const statusEl = document.getElementById('enqStatus');
+    statusEl.textContent = 'Loading enquiries…';
+    statusEl.className = 'status-msg';
+    try{
+      const resp = await adminFetch('/api/admin-enquiries');
+      const data = await resp.json();
+      renderEnquiries(data.rows || []);
+      statusEl.textContent = `${(data.rows||[]).length} enquiries.`;
+    } catch(e){
+      statusEl.textContent = 'Failed to load enquiries: ' + e.message;
+      statusEl.className = 'status-msg error';
+    }
+  }
+
+  function renderEnquiries(rows){
+    const body = document.getElementById('enqBody');
+    body.innerHTML = '';
+    rows.forEach(r => {
+      const tr = document.createElement('tr');
+      const when = r.created_at ? new Date(r.created_at).toLocaleString('en-IN') : '';
+      tr.innerHTML = `
+        <td>${when}</td>
+        <td><span class="type-pill ${r.type}">${r.type}</span></td>
+        <td>${r.name || ''}</td>
+        <td>${r.phone || ''}</td>
+        <td>${r.email || ''}</td>
+        <td>${r.package_name || ''}</td>
+        <td>${r.travelers ?? ''}</td>
+        <td>${r.preferred_month || ''}</td>
+        <td style="max-width:220px;white-space:normal;">${r.message || ''}</td>
+        <td>
+          <select data-id="${r.id}">
+            <option value="new" ${r.status==='new'?'selected':''}>New</option>
+            <option value="contacted" ${r.status==='contacted'?'selected':''}>Contacted</option>
+            <option value="booked" ${r.status==='booked'?'selected':''}>Booked</option>
+          </select>
+        </td>
+      `;
+      tr.querySelector('select').addEventListener('change', async (e) => {
+        try{
+          await adminFetch('/api/admin-enquiries', {
+            method:'PATCH', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ id: r.id, status: e.target.value })
+          });
+        } catch(err){
+          alert('Failed to update status: ' + err.message);
+        }
+      });
+      body.appendChild(tr);
+    });
+  }
+</script>
+</body>
+</html>
