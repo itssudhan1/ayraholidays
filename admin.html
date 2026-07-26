@@ -112,7 +112,25 @@
   }
   .gtile .gtile-foot label:hover{border-color:var(--gold);}
 
+  /* ---- Dashboard ---- */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .stat-card{
+    background:#fff;border:2px solid var(--line);border-radius:8px;padding:20px 22px;
+  }
+  .stat-card .stat-num{font-size:2rem;font-weight:700;color:var(--ink);line-height:1;}
+  .stat-card .stat-label{font-size:.78rem;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:.04em;}
+  .stat-card.accent{border-color:var(--gold);}
+  .dash-section-title{font-size:.85rem;font-weight:700;color:var(--ink);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.04em;}
+  .breakdown-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:.86rem;}
+  .breakdown-row:last-child{border-bottom:none;}
+  .breakdown-list{background:#fff;border:2px solid var(--line);border-radius:8px;padding:6px 18px;max-width:420px;}
+
   /* ---- Enquiries table ---- */
+  .enq-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+  .enq-filters select,.enq-filters input[type="text"]{
+    padding:9px 12px;border:2px solid var(--line);border-radius:6px;font-size:.83rem;
+  }
+  .enq-filters input[type="text"]{min-width:200px;}
   table.enq-table{width:100%;border-collapse:collapse;background:#fff;border:2px solid var(--line);border-radius:8px;overflow:hidden;}
   table.enq-table th,table.enq-table td{padding:10px 12px;text-align:left;font-size:.8rem;border-bottom:1px solid var(--line);}
   table.enq-table th{background:var(--ink);color:var(--parchment);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;}
@@ -151,14 +169,28 @@
   </header>
 
   <nav class="tabs">
-    <button class="tab-btn active" data-tab="packages">Packages</button>
+    <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn" data-tab="packages">Packages</button>
     <button class="tab-btn" data-tab="gallery">Gallery</button>
     <button class="tab-btn" data-tab="enquiries">Enquiries</button>
   </nav>
 
   <main>
+    <!-- ===== DASHBOARD ===== -->
+    <section class="panel active" id="panel-dashboard">
+      <div class="toolbar">
+        <div id="dashStatus" class="status-msg"></div>
+        <button class="btn btn-ghost" id="refreshDashBtn">Refresh</button>
+      </div>
+      <div class="stat-grid" id="dashStatGrid"></div>
+      <div class="dash-section-title">Enquiries by Status</div>
+      <div class="breakdown-list" id="dashStatusBreakdown"></div>
+      <div class="dash-section-title">Enquiries by Type</div>
+      <div class="breakdown-list" id="dashTypeBreakdown"></div>
+    </section>
+
     <!-- ===== PACKAGES ===== -->
-    <section class="panel active" id="panel-packages">
+    <section class="panel" id="panel-packages">
       <div class="toolbar">
         <div id="pkgStatus" class="status-msg"></div>
         <button class="btn btn-primary" id="addPkgBtn">+ Add Package</button>
@@ -180,7 +212,24 @@
     <section class="panel" id="panel-enquiries">
       <div class="toolbar">
         <div id="enqStatus" class="status-msg"></div>
-        <button class="btn btn-ghost" id="refreshEnqBtn">Refresh</button>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-ghost" id="exportCsvBtn">Export CSV</button>
+          <button class="btn btn-ghost" id="refreshEnqBtn">Refresh</button>
+        </div>
+      </div>
+      <div class="enq-filters">
+        <select id="filterStatus">
+          <option value="">All statuses</option>
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="booked">Booked</option>
+        </select>
+        <select id="filterType">
+          <option value="">All types</option>
+          <option value="booking">Booking</option>
+          <option value="enquiry">Enquiry</option>
+        </select>
+        <input type="text" id="filterSearch" placeholder="Search name or phone…">
       </div>
       <div style="overflow-x:auto;">
         <table class="enq-table" id="enqTable">
@@ -216,7 +265,7 @@
   function showShell(){
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminShell').style.display = 'block';
-    loadPackages();
+    loadDashboard();
   }
 
   document.getElementById('loginBtn').addEventListener('click', doLogin);
@@ -261,6 +310,8 @@
       btn.classList.add('active');
       const tab = btn.dataset.tab;
       document.getElementById('panel-' + tab).classList.add('active');
+      if(tab === 'dashboard') loadDashboard();
+      if(tab === 'packages') loadPackages();
       if(tab === 'gallery') loadGallery();
       if(tab === 'enquiries') loadEnquiries();
     });
@@ -277,6 +328,57 @@
     if(!resp.ok) throw new Error('Cloudinary upload failed');
     const data = await resp.json();
     return data.secure_url;
+  }
+
+  // ================= DASHBOARD =================
+  document.getElementById('refreshDashBtn').addEventListener('click', loadDashboard);
+
+  async function loadDashboard(){
+    const statusEl = document.getElementById('dashStatus');
+    statusEl.textContent = 'Loading…';
+    statusEl.className = 'status-msg';
+    try{
+      const [pkgResp, enqResp] = await Promise.all([
+        adminFetch('/api/admin-packages'),
+        adminFetch('/api/admin-enquiries')
+      ]);
+      const pkgData = await pkgResp.json();
+      const enqData = await enqResp.json();
+      const packages = pkgData.packages || [];
+      const rows = enqData.rows || [];
+
+      const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+      const newThisWeek = rows.filter(r => r.created_at && new Date(r.created_at).getTime() >= weekAgo).length;
+
+      const statusCounts = { new: 0, contacted: 0, booked: 0 };
+      const typeCounts = { booking: 0, enquiry: 0 };
+      rows.forEach(r => {
+        if(statusCounts[r.status] !== undefined) statusCounts[r.status]++;
+        if(typeCounts[r.type] !== undefined) typeCounts[r.type]++;
+      });
+
+      document.getElementById('dashStatGrid').innerHTML = `
+        <div class="stat-card"><div class="stat-num">${packages.length}</div><div class="stat-label">Total Packages</div></div>
+        <div class="stat-card"><div class="stat-num">${rows.length}</div><div class="stat-label">Total Enquiries</div></div>
+        <div class="stat-card accent"><div class="stat-num">${newThisWeek}</div><div class="stat-label">New This Week</div></div>
+        <div class="stat-card accent"><div class="stat-num">${statusCounts.new}</div><div class="stat-label">Awaiting Follow-up</div></div>
+      `;
+
+      document.getElementById('dashStatusBreakdown').innerHTML = `
+        <div class="breakdown-row"><span>New</span><span>${statusCounts.new}</span></div>
+        <div class="breakdown-row"><span>Contacted</span><span>${statusCounts.contacted}</span></div>
+        <div class="breakdown-row"><span>Booked</span><span>${statusCounts.booked}</span></div>
+      `;
+      document.getElementById('dashTypeBreakdown').innerHTML = `
+        <div class="breakdown-row"><span>Bookings</span><span>${typeCounts.booking}</span></div>
+        <div class="breakdown-row"><span>Enquiries</span><span>${typeCounts.enquiry}</span></div>
+      `;
+
+      statusEl.textContent = '';
+    } catch(e){
+      statusEl.textContent = 'Failed to load dashboard: ' + e.message;
+      statusEl.className = 'status-msg error';
+    }
   }
 
   // ================= PACKAGES =================
@@ -536,7 +638,13 @@
   }
 
   // ================= ENQUIRIES =================
+  let enquiriesCache = [];
+
   document.getElementById('refreshEnqBtn').addEventListener('click', loadEnquiries);
+  document.getElementById('filterStatus').addEventListener('change', applyEnquiryFilters);
+  document.getElementById('filterType').addEventListener('change', applyEnquiryFilters);
+  document.getElementById('filterSearch').addEventListener('input', applyEnquiryFilters);
+  document.getElementById('exportCsvBtn').addEventListener('click', exportEnquiriesCsv);
 
   async function loadEnquiries(){
     const statusEl = document.getElementById('enqStatus');
@@ -545,12 +653,63 @@
     try{
       const resp = await adminFetch('/api/admin-enquiries');
       const data = await resp.json();
-      renderEnquiries(data.rows || []);
-      statusEl.textContent = `${(data.rows||[]).length} enquiries.`;
+      enquiriesCache = data.rows || [];
+      applyEnquiryFilters();
+      statusEl.textContent = `${enquiriesCache.length} enquiries.`;
     } catch(e){
       statusEl.textContent = 'Failed to load enquiries: ' + e.message;
       statusEl.className = 'status-msg error';
     }
+  }
+
+  function getFilteredEnquiries(){
+    const statusVal = document.getElementById('filterStatus').value;
+    const typeVal = document.getElementById('filterType').value;
+    const searchVal = document.getElementById('filterSearch').value.trim().toLowerCase();
+
+    return enquiriesCache.filter(r => {
+      if(statusVal && r.status !== statusVal) return false;
+      if(typeVal && r.type !== typeVal) return false;
+      if(searchVal){
+        const haystack = `${r.name || ''} ${r.phone || ''}`.toLowerCase();
+        if(!haystack.includes(searchVal)) return false;
+      }
+      return true;
+    });
+  }
+
+  function applyEnquiryFilters(){
+    const filtered = getFilteredEnquiries();
+    renderEnquiries(filtered);
+    const statusEl = document.getElementById('enqStatus');
+    statusEl.textContent = `Showing ${filtered.length} of ${enquiriesCache.length} enquiries.`;
+    statusEl.className = 'status-msg';
+  }
+
+  function csvEscape(val){
+    const s = (val === null || val === undefined) ? '' : String(val);
+    if(/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function exportEnquiriesCsv(){
+    const rows = getFilteredEnquiries();
+    const headers = ['created_at','type','name','phone','email','package_name','travelers','preferred_month','message','status'];
+    const lines = [headers.join(',')];
+    rows.forEach(r => {
+      lines.push(headers.map(h => csvEscape(r[h])).join(','));
+    });
+    const csv = lines.join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const stamp = new Date().toISOString().slice(0,10);
+    a.href = url;
+    a.download = `ayra-enquiries-${stamp}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
   }
 
   function renderEnquiries(rows){
