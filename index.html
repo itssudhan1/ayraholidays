@@ -1121,7 +1121,7 @@
     const DEFAULT_HEADING = 'Explore Beyond Boundaries';
     const DEFAULT_CTA = 'Explore Packages';
 
-    const gsapReady = typeof window.gsap !== 'undefined';
+    const gsapReady = typeof window.gsap !== 'undefined' && window.gsap !== null;
     const heading = document.getElementById('heroHeading');
     const subtitle = document.getElementById('heroSubtitle');
     const kicker = document.getElementById('heroKicker');
