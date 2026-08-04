@@ -2,7 +2,7 @@ import { getFile, putFile } from './_lib/github.js';
 import { requireAdmin } from './_lib/auth.js';
 
 const START_MARKER = 'const packages = [';
-const END_ANCHOR = '\n  const io = new IntersectionObserver';
+const END_ANCHOR = '\n  const catLabels = {';
 
 function extractPackages(html) {
   const startIdx = html.indexOf(START_MARKER);
